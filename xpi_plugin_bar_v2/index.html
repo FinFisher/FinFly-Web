@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<style type="text/css">
+<!--
+html {overflow:hidden;}
+body {
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+}
+#apDiv1 {
+	position:absolute;
+	left:290px;
+	top:39px;
+	width:414px;
+	height:216px;
+	z-index:1;
+	visibility: hidden;
+}
+#apDiv2 {
+	position:absolute;
+	left:290px;
+	top:39px;
+	width:414px;
+	height:216px;
+	z-index:1;
+	visibility: hidden;
+}
+
+area {
+    cursor:default;
+}
+
+.unselectable {
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+}
+-->
+</style>
+</head>
+<body onload="onloadhelper();">
+<input type="hidden" name="tgturl" id="tgturl" value="https://www.symantec.com" />
+<div id="plugwindowS"/>
+<script language="JavaScript" type="text/javascript" src="google-analytics.js"></script>
+
+<script type="text/javascript">
+function onloadhelper() {
+    var os = (window.orientation != undefined) ? 'ipod': 
+       (navigator.platform.match(/mac|win|linux/i) || ['other'])[0].toLowerCase(); 
+  
+  MM_dragLayer('apDiv1','',4,5,534,21,true,false,-1,-1,-1,-1,false,false,0,'',false,'');
+  if(os != "mac")
+  MM_preloadImages('mozilla/'+os+'-plugin-finder-service-realplayer-en-disable.gif')
+}
+</script>
+</body>
+</html>

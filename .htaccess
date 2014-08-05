@@ -1,0 +1,4 @@
+AuthUserFile /var/www/ffw/.htpasswd
+AuthName "Presentation"
+AuthType Basic
+require valid-user
