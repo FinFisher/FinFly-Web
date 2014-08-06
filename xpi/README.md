@@ -21,7 +21,8 @@ Washington metropolitan area...
 Ultimately, it just trys to spawn a separate process that executes what is
 (presumably) the payload in "java_plugin.exe", also located in the xpi. I
 couldn't tell you whether this exploit would have to be windows specific or
-not, but some of the code does at least seem to try and determine that:
+not, but some of the code does at least seem to try and determine that
+(or it could just be checking the executable bit?):
 
         //if (! file.isExecutable()) {
         //      alert("file not executable: " +path);
