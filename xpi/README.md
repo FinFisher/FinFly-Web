@@ -14,7 +14,7 @@ file: chrome/content/Java_Plugin.js
 
     ... etc etc
 
-I guess "doSomethingWhenBrowserIsStarted() could be anything, like... send
+I guess "doSomethingWhenBrowserIsStarted()" could be anything, like... send
 the victim's MAC and IP addresses to an IP address located in the
 Washington metropolitan area...
 
