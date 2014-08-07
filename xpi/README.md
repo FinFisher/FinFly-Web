@@ -57,14 +57,14 @@ window in the start bar (or whatever MS is calls it), and will not escape the
 bounds of the browsing window. As well, the checkbox can be toggled, and the
 "next" button will toggle appropriately:
 
-[ffw-dialog](https://i.imgur.com/y5edoPh.png)
+![ffw-dialog](https://i.imgur.com/y5edoPh.png)
 
 Upon having the "Java Update" checked and clicking "next," the code ultimately
 tries to run the `doIt()` function in google-analytics.js, which tries to
 trigger an installation of the xpi. In FF 31 on Linux, this fails with a
 warning from the browser:
 
-[ffw-install-fail](https://i.imgur.com/mCf8rLs.png)
+![ffw-install-fail](https://i.imgur.com/mCf8rLs.png)
 
 The extracted plugin itself appears to be an exe file:
 
